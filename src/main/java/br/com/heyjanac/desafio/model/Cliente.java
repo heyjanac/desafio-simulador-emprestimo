@@ -7,60 +7,69 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cliente")
+@Table(name = "TB_CLIENTE")
+@SequenceGenerator(name = "clienteIdGenerator", sequenceName = "SEQ_TB_CLIENTE", allocationSize = 1)
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "clienteIdGenerator", strategy = GenerationType.SEQUENCE)
+	@Column(name = "ID_CLIENTE")
+	private Long idCliente;
+	@Column(name = "NU_CPF")
+	private String cpfCliente;
+	@Column(name = "DS_NOME")
+	private String nomeCliente;
+	@Column(name = "DS_EMAIL")
+	private String emailCliente;
 
-	private String cpf;
-	private String name;
-	private String email;
-
-	public long getId() {
-		return id;
+	
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Cliente(String cpfCliente, String nomeCliente, String emailCliente) {
+		this.cpfCliente = cpfCliente;
+		this.nomeCliente = nomeCliente;
+		this.emailCliente = emailCliente;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Long getIdCliente() {
+		return idCliente;
 	}
 
-	@Column(name = "cpf", nullable = false)
-	public String getCpf() {
-		return cpf;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public String getCpfCliente() {
+		return cpfCliente;
 	}
 
-	@Column(name = "name", nullable = false)
-	public String getName() {
-		return name;
+	public void setCpfCliente(String cpfCliente) {
+		this.cpfCliente = cpfCliente;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getNomeCliente() {
+		return nomeCliente;
 	}
 
-	@Column(name = "email", nullable = false)
-	public String getEmail() {
-		return email;
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public String getEmailCliente() {
+		return emailCliente;
 	}
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", cpf=" + cpf + ", name=" + name + ", email=" + email + "]";
+	public void setEmailCliente(String emailCliente) {
+		this.emailCliente = emailCliente;
 	}
-
+	
+	
 }

@@ -4,89 +4,99 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Contrato")
+@Table(name = "TB_CONTRATO")
+@SequenceGenerator(name = "contratoIdGenerator", sequenceName = "SEQ_TB_CONTRATO", allocationSize = 1)
 public class Contrato implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Long numero_contrato;
-	private Date data_contrato;
-	private BigDecimal valor_contrato;
-	private Integer quantidade_parcela;
-	private BigDecimal valor_taxa_contrato;
-	private BigDecimal valor_iof_contrato;
+	@GeneratedValue(generator = "contratoIdGenerator",strategy = GenerationType.SEQUENCE)
+	@Column(name = "ID_CONTRATO")
+	private Long idContrato;
+	
+	@Column(name = "NU_CONTRATO")
+	private Long numeroContrato;
+	
+	@Column(name = "DT_CONTRATO")
+	private Date dataContrato;
+	
+	@Column(name = "VL_CONTRATO")
+	private BigDecimal valorContrato;
+	
+	@Column(name = "NU_QUANTIDADE_PARCELA")
+	private Integer quantidadeParcela;
+	
+	@Column(name = "VL_TAXA_CONTRATO")
+	private BigDecimal valorTaxaContrato;
+	
+	@Column(name = "VL_IOF_CONTRATO")
+	private BigDecimal valorIofContrato;
 
-	public Long getId() {
-		return id;
+	public Long getIdContrato() {
+		return idContrato;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdContrato(Long idContrato) {
+		this.idContrato = idContrato;
 	}
 
-	public Long getNumero_contrato() {
-		return numero_contrato;
+	public Long getNumeroContrato() {
+		return numeroContrato;
 	}
 
-	public void setNumero_contrato(Long numero_contrato) {
-		this.numero_contrato = numero_contrato;
+	public void setNumeroContrato(Long numeroContrato) {
+		this.numeroContrato = numeroContrato;
 	}
 
-	public Date getData_contrato() {
-		return data_contrato;
+	public Date getDataContrato() {
+		return dataContrato;
 	}
 
-	public void setData_contrato(Date data_contrato) {
-		this.data_contrato = data_contrato;
+	public void setDataContrato(Date dataContrato) {
+		this.dataContrato = dataContrato;
 	}
 
-	public BigDecimal getValor_contrato() {
-		return valor_contrato;
+	public BigDecimal getValorContrato() {
+		return valorContrato;
 	}
 
-	public void setValor_contrato(BigDecimal valor_contrato) {
-		this.valor_contrato = valor_contrato;
+	public void setValorContrato(BigDecimal valorContrato) {
+		this.valorContrato = valorContrato;
 	}
 
-	public Integer getQuantidade_parcela() {
-		return quantidade_parcela;
+	public Integer getQuantidadeParcela() {
+		return quantidadeParcela;
 	}
 
-	public void setQuantidade_parcela(Integer quantidade_parcela) {
-		this.quantidade_parcela = quantidade_parcela;
+	public void setQuantidadeParcela(Integer quantidadeParcela) {
+		this.quantidadeParcela = quantidadeParcela;
 	}
 
-	public BigDecimal getValor_taxa_contrato() {
-		return valor_taxa_contrato;
+	public BigDecimal getValorTaxaContrato() {
+		return valorTaxaContrato;
 	}
 
-	public void setValor_taxa_contrato(BigDecimal valor_taxa_contrato) {
-		this.valor_taxa_contrato = valor_taxa_contrato;
+	public void setValorTaxaContrato(BigDecimal valorTaxaContrato) {
+		this.valorTaxaContrato = valorTaxaContrato;
 	}
 
-	public BigDecimal getValor_iof_contrato() {
-		return valor_iof_contrato;
+	public BigDecimal getValorIofContrato() {
+		return valorIofContrato;
 	}
 
-	public void setValor_iof_contrato(BigDecimal valor_iof_contrato) {
-		this.valor_iof_contrato = valor_iof_contrato;
+	public void setValorIofContrato(BigDecimal valorIofContrato) {
+		this.valorIofContrato = valorIofContrato;
 	}
 
-	@Override
-	public String toString() {
-		return "Contrato [id=" + id + ", numero_contrato=" + numero_contrato + ", data_contrato=" + data_contrato
-				+ ", valor_contrato=" + valor_contrato + ", quantidade_parcela=" + quantidade_parcela
-				+ ", valor_taxa_contrato=" + valor_taxa_contrato + ", valor_iof_contrato=" + valor_iof_contrato + "]";
-	}
 
 }

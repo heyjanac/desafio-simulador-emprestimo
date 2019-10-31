@@ -23,7 +23,7 @@ import br.com.heyjanac.desafio.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/api/v1")
-public class ClienteResource {
+public class ClienteController {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -52,9 +52,9 @@ public class ClienteResource {
     	Cliente client = clienteRepository.findById(clientId)
         .orElseThrow(() -> new ResourceNotFoundException("Client not found for this id :: " + clientId));
 
-    	client.setEmail(clientDetails.getEmail());
-    	client.setName(clientDetails.getName());
-    	client.setCpf(clientDetails.getCpf());
+    	client.setEmailCliente(clientDetails.getEmailCliente());
+    	client.setNomeCliente(clientDetails.getNomeCliente());
+    	client.setCpfCliente(clientDetails.getCpfCliente());
         final Cliente updatedClient = clienteRepository.save(client);
         return ResponseEntity.ok(updatedClient);
     }
