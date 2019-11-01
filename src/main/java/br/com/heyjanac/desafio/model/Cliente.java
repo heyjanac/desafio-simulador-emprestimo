@@ -19,13 +19,16 @@ public class Cliente implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "clienteIdGenerator", strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_CLIENTE")
+	@Column(name = "ID_CLIENTE", nullable = false)
 	private Long idCliente;
-	@Column(name = "NU_CPF")
+	
+	@Column(name = "NU_CPF", nullable = false)
 	private String cpfCliente;
-	@Column(name = "DS_NOME")
+	
+	@Column(name = "DS_NOME", nullable = false)
 	private String nomeCliente;
-	@Column(name = "DS_EMAIL")
+	
+	@Column(name = "DS_EMAIL", nullable = false)
 	private String emailCliente;
 
 	
