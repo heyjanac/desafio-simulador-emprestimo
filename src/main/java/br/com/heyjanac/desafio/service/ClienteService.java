@@ -20,7 +20,7 @@ public interface ClienteService {
 	 * @param cliente
 	 * @return Cliente
 	 */
-	Cliente gravar(Cliente cliente);
+	Cliente salvar(Cliente cliente);
 	
 	
 }

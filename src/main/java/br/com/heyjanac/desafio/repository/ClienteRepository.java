@@ -9,6 +9,6 @@ import br.com.heyjanac.desafio.model.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	//@Transactional(readOnly = true)
-	//Cliente findByCpf(String cpf);
+	//Optional<Cliente> findByCpf(String cpf);
 
 }
