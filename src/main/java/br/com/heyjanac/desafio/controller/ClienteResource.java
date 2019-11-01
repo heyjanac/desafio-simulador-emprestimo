@@ -1,4 +1,4 @@
-package br.com.heyjanac.desafio.resource;
+package br.com.heyjanac.desafio.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.heyjanac.desafio.dto.Cliente;
 import br.com.heyjanac.desafio.exception.ResourceNotFoundException;
+import br.com.heyjanac.desafio.model.Cliente;
 import br.com.heyjanac.desafio.repository.ClienteRepository;
 
 @RestController

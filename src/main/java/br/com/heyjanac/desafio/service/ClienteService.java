@@ -2,7 +2,7 @@ package br.com.heyjanac.desafio.service;
 
 import java.util.Optional;
 
-import br.com.heyjanac.desafio.dto.Cliente;
+import br.com.heyjanac.desafio.model.Cliente;
 
 public interface ClienteService {
 

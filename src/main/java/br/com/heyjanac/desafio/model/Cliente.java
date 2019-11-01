@@ -1,4 +1,6 @@
-package br.com.heyjanac.desafio.dto;
+package br.com.heyjanac.desafio.model;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,19 +11,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Cliente")
-public class Cliente {
+public class Cliente implements Serializable {
 
-	private long id;
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String cpf;
 	private String name;
 	private String email;
 
-	public Cliente() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -61,7 +62,5 @@ public class Cliente {
 	public String toString() {
 		return "Cliente [id=" + id + ", cpf=" + cpf + ", name=" + name + ", email=" + email + "]";
 	}
-
-	
 
 }
