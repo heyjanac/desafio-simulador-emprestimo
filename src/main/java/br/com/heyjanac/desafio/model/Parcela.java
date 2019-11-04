@@ -26,10 +26,10 @@ public class Parcela implements Serializable {
 	@GeneratedValue(generator = "parcelaIdGenerator", strategy = GenerationType.SEQUENCE)
 	@Column(name = "ID_PARCELA", nullable = false)
 	private Long idParcela;
-	
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "ID_EMPRESTIMO")
-//    private Emprestimo emprestimo;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_EMPRESTIMO")
+	private Emprestimo emprestimo;
 
 	@Column(name = "NU_PARCELA", nullable = false)
 	private Integer numeroParcela;

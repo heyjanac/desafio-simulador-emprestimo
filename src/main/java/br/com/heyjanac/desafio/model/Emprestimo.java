@@ -2,10 +2,15 @@ package br.com.heyjanac.desafio.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +19,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.heyjanac.desafio.enums.StatusEmprestimoEnum;
+
+@Entity
+@Table(name = "TB_EMPRESTIMO")
+@SequenceGenerator(name = "emprestimoIdGenerator", sequenceName = "SEQ_TB_CLIENTE", allocationSize = 1)
 
 public class Emprestimo implements Serializable {
 
@@ -29,9 +40,9 @@ public class Emprestimo implements Serializable {
 	private Long idEmprestimo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ID_CLIENTE", nullable = false)
+	@JoinColumn(name = "ID_CLIENTE")
 	private Cliente cliente;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_EMPRESTIMO")
 	private List<Parcela> parcelas;
@@ -65,14 +76,25 @@ public class Emprestimo implements Serializable {
 	@Column(name = "VL_IOF_CONTRATO")
 	private BigDecimal valorIofContrato;
 
-	@Column(name = "NU_STATUS")
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "NU_STATUS", nullable = false)
 	private StatusEmprestimoEnum numeroStatus;
 
 	@PrePersist
 	public void prePersist() {
 		final Date atual = new Date();
 		this.dataSimulacao = atual;
-		this.dataValidadeSimulacao = atual;
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new java.util.Date());
+		calendar.add(Calendar.DAY_OF_MONTH, 30);
+		System.out.println(calendar.getTime());
+
+		this.dataValidadeSimulacao = calendar.getTime();
+
+		LocalDate hoje = LocalDate.now();
+		LocalDate amanha = hoje.plusDays(30);
+		System.out.println("hoje: " + hoje + " vencEmpr: " + amanha);
 	}
 
 	public Long getIdEmprestimo() {
