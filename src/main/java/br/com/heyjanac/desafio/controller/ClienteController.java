@@ -46,7 +46,7 @@ public class ClienteController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "")
-	public Cliente salvarCliente(@RequestBody Cliente cliente) {
+	public Cliente salvarCliente(@RequestBody Cliente cliente) throws ResourceNotFoundException {
 		return clienteService.salvar(cliente);
 	}
 

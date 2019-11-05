@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Simulacao implements Serializable {
+public class SimulacaoDTO implements Serializable {
 
 	private static final long serialVersionUID = -7303732725489015670L;
 
+	private Long id;
+	
 	private Long numeroContrato;
 
 	private Date dataSimulacao;
@@ -21,6 +23,13 @@ public class Simulacao implements Serializable {
 	private BigDecimal valorParcela;
 
 	private BigDecimal valorTaxaJuros;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getNumeroContrato() {
 		return numeroContrato;

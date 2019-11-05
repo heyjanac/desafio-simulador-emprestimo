@@ -11,6 +11,4 @@ public interface IClienteRepository extends JpaRepository<Cliente, Long> {
 
 	Cliente findByCpf(String cpf);
 	
-//	Cliente update(Cliente cliente);
-
 }

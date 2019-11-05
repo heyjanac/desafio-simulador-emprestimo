@@ -8,4 +8,6 @@ import br.com.heyjanac.desafio.model.Emprestimo;
 @Repository
 public interface IEmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
+	Emprestimo findByUltimoNumeroContrato();
+	
 }
