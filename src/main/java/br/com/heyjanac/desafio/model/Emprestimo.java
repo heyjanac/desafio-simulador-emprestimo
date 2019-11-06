@@ -2,11 +2,10 @@ package br.com.heyjanac.desafio.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,9 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.heyjanac.desafio.enums.StatusEmprestimoEnum;
 import br.com.heyjanac.desafio.exception.RegrasExcpetion;
@@ -28,7 +28,7 @@ import br.com.heyjanac.desafio.exception.RegrasExcpetion;
 @Entity
 @Table(name = "TB_EMPRESTIMO")
 @SequenceGenerator(name = "emprestimoIdGenerator", sequenceName = "SEQ_TB_CLIENTE", allocationSize = 1)
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Emprestimo implements Serializable {
 
 	private static final long serialVersionUID = 6618569239781269554L;
@@ -37,12 +37,13 @@ public class Emprestimo implements Serializable {
 
 	private static final Integer QTDE_MAXIMA_PARCELA = 24; // R4
 
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat();
 
 	private LocalDateTime dataCorrente;
 
 	public Emprestimo() {
 		dataCorrente = LocalDateTime.now();
+		this.dataSimulacao = dataCorrente;
+		this.dataValidadeSimulacao = this.dataSimulacao.plusDays(QTDE_DIAS_VALIDADE_SIMULACAO);
 	}
 
 	@Id
@@ -54,7 +55,7 @@ public class Emprestimo implements Serializable {
 	@JoinColumn(name = "ID_CLIENTE")
 	private Cliente cliente;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "ID_EMPRESTIMO")
 	private List<Parcela> parcelas;
 
@@ -79,22 +80,15 @@ public class Emprestimo implements Serializable {
 	@Column(name = "VL_TAXA_JUROS")
 	private BigDecimal valorTaxaJuros;
 
-	@Column(name = "DT_CONTRATACAO", nullable = false)
-	private Date dataContratacao;
+	@Column(name = "DT_CONTRATACAO", nullable = true)
+	private LocalDateTime dataContratacao;
 
 	@Column(name = "VL_IOF_CONTRATO")
 	private BigDecimal valorIofContrato;
 
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "NU_STATUS", nullable = false)
+	@Column(name = "NU_STATUS", nullable = false, length = 2)
 	private StatusEmprestimoEnum numeroStatus;
-
-	@PrePersist
-	public void prePersist() {
-
-		this.dataSimulacao = dataCorrente;
-		this.dataValidadeSimulacao = this.dataSimulacao.plusDays(QTDE_DIAS_VALIDADE_SIMULACAO);
-	}
 
 	public Long getIdEmprestimo() {
 		return idEmprestimo;
@@ -157,8 +151,8 @@ public class Emprestimo implements Serializable {
 	}
 
 	public void setQuantidadeParcela(Integer quantidadeParcela) throws RegrasExcpetion {
-		this.validarQuantidadeMaximaDeParcelas();
 		this.quantidadeParcela = quantidadeParcela;
+		this.validarQuantidadeMaximaDeParcelas();
 	}
 
 	public BigDecimal getValorParcela() {
@@ -177,11 +171,11 @@ public class Emprestimo implements Serializable {
 		this.valorTaxaJuros = valorTaxaJuros;
 	}
 
-	public Date getDataContratacao() {
+	public LocalDateTime getDataContratacao() {
 		return dataContratacao;
 	}
 
-	public void setDataContratacao(Date dataContratacao) {
+	public void setDataContratacao(LocalDateTime dataContratacao) {
 		this.dataContratacao = dataContratacao;
 	}
 
@@ -201,9 +195,13 @@ public class Emprestimo implements Serializable {
 		this.numeroStatus = numeroStatus;
 	}
 
-	// Informacoes Adicionais: A simulacao do emprestimo possuem um periodo de
-	// validade de 30 dias. Apos este periodo nao sera possivel efetivar a
-	// contratacao.
+	/**
+	 * Informacoes Adicionais: A simulacao do emprestimo possuem um periodo de
+	 * validade de 30 dias. Apos este periodo nao sera possivel efetivar a
+	 * contratacao.
+	 * 
+	 * @return
+	 */
 	public Boolean isSimulacaoValida() {
 		Boolean retorno = true;
 		LocalDateTime dataVerificada = LocalDateTime.now().minusDays(QTDE_DIAS_VALIDADE_SIMULACAO);
@@ -213,13 +211,15 @@ public class Emprestimo implements Serializable {
 		return retorno;
 	}
 
-	// R4 : Quantidade Maxima de Parcelas = 24.
+	/**
+	 * R4 : Quantidade Maxima de Parcelas = 24.
+	 * 
+	 * @throws RegrasExcpetion
+	 */
 	public void validarQuantidadeMaximaDeParcelas() throws RegrasExcpetion {
 		if (this.quantidadeParcela != null && this.quantidadeParcela > QTDE_MAXIMA_PARCELA)
 			throw new RegrasExcpetion("A quantidade maxima permitida de parcelas sao " + QTDE_MAXIMA_PARCELA.byteValue()
-					+ " e o informado foi: " + this.quantidadeParcela);
+					+ " e o informado foi: " + this.quantidadeParcela + ".");
 	}
-	
-	
 
 }

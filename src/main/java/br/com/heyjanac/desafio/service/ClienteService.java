@@ -44,7 +44,7 @@ public class ClienteService {
 
 	public Cliente buscarPorCpf(String cpf) {
 		log.info("Buscando cliente por CPF {}", cpf);
-		return clienteRepository.findByCpf(cpf);
+		return clienteRepository.findFirstByCpf(cpf);
 	}
 
 	@Transactional
@@ -106,7 +106,13 @@ public class ClienteService {
 
 	public void deletar(Long id) {
 		log.info("Deletando cliente: {}", id);
-		this.clienteRepository.findById(id);
+		Optional<Cliente> optClienteAtualizar = clienteRepository.findById(id);
+
+		if (optClienteAtualizar.isPresent()) {
+			this.clienteRepository.deleteAll();
+		} else {
+			log.info("Cliente: {} inexistente", id);
+		}
 	}
 
 	public boolean isEmailValido(String enderecoEmail) throws RegrasExcpetion {
@@ -116,7 +122,7 @@ public class ClienteService {
 			email.validate();
 		} catch (AddressException e) {
 			retorno = false;
-			throw new RegrasExcpetion("EMAIL [" + enderecoEmail + "] informado invalido.");
+			throw new RegrasExcpetion(" EMAIL [" + enderecoEmail + "] informado invalido");
 		}
 		return retorno;
 	}
@@ -125,13 +131,13 @@ public class ClienteService {
 		Boolean retorno = false;
 
 		try {
-			
+
 			log.warn("cpf: " + cpf);
 
 			validarExistenciaTamanhoCpf(cpf);
 			validarFormatoCpf(cpf);
 			retorno = Commons.isCpf(cpf);
-			
+
 			if (!retorno) {
 				log.warn("Erro [isCpfValido] retorno: " + retorno);
 				throw new RegrasExcpetion();
@@ -154,10 +160,10 @@ public class ClienteService {
 	}
 
 	public Boolean validarFormatoCpf(String cpf) throws RegrasExcpetion {
-		
+
 		Boolean retorno = false;
 		Boolean retorno2 = false;
-		
+
 		String regex = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
 
 		Pattern pat = Pattern.compile(regex);
@@ -173,7 +179,7 @@ public class ClienteService {
 			log.warn("Erro [validarFormatoCpf] retorno: " + retorno);
 			throw new RegrasExcpetion();
 		}
-		
+
 		return retorno;
 	}
 

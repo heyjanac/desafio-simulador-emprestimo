@@ -9,6 +9,6 @@ import br.com.heyjanac.desafio.model.Cliente;
 @Repository
 public interface IClienteRepository extends JpaRepository<Cliente, Long> {
 
-	Cliente findByCpf(String cpf);
+	Cliente findFirstByCpf(String cpf);
 	
 }

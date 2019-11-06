@@ -2,16 +2,13 @@ package br.com.heyjanac.desafio.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,15 +24,11 @@ public class Parcela implements Serializable {
 	@Column(name = "ID_PARCELA", nullable = false)
 	private Long idParcela;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ID_EMPRESTIMO")
-	private Emprestimo emprestimo;
-
 	@Column(name = "NU_PARCELA", nullable = false)
 	private Integer numeroParcela;
 
 	@Column(name = "DT_VENCIMENTO", nullable = false)
-	private Date dataVencimento;
+	private LocalDateTime dataVencimento;
 
 	@Column(name = "VL_PARCELA", nullable = false)
 	private BigDecimal valorParcela;
@@ -56,11 +49,11 @@ public class Parcela implements Serializable {
 		this.numeroParcela = numeroParcela;
 	}
 
-	public Date getDataVencimento() {
+	public LocalDateTime getDataVencimento() {
 		return dataVencimento;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
+	public void setDataVencimento(LocalDateTime dataVencimento) {
 		this.dataVencimento = dataVencimento;
 	}
 

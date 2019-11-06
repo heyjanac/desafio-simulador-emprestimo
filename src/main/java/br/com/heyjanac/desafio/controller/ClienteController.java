@@ -2,8 +2,6 @@ package br.com.heyjanac.desafio.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +18,6 @@ import br.com.heyjanac.desafio.service.ClienteService;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
-	private static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 
 	@Autowired
 	private ClienteService clienteService;
@@ -50,7 +46,7 @@ public class ClienteController {
 		return clienteService.salvar(cliente);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public void deletarClientePorId(@PathVariable(value = "id") Long id) {
 		clienteService.deletar(id);
 	}
